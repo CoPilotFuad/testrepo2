@@ -19,12 +19,11 @@ public class EmailServiceImpl implements EmailService {
 
         message.setSubject("Email Confirmation - Your OTP Code");
 
-        // Email body with OTP token instead of a link
+
         String emailBody = String.format("Dear User,\n\nYour OTP for email verification is: %s\n\nPlease enter this code in the app to verify your email.\n\nThanks,\nYour Team", token);
 
         message.setText(emailBody);
 
-        // Send the email
         mailSender.send(message);
     }
     @Override

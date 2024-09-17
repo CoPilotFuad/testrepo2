@@ -26,12 +26,5 @@ public class EmailServiceImpl implements EmailService {
 
         mailSender.send(message);
     }
-    @Override
-    public void sendOtpEmail(String email, String otp) {
-        SimpleMailMessage message = new SimpleMailMessage();
-        message.setTo(email);
-        message.setSubject("Password Reset OTP");
-        message.setText("Your OTP code is: " + otp);
-        mailSender.send(message);
-    }
+
 }

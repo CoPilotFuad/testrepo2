@@ -9,25 +9,29 @@ import org.yalli.wah.services.EmailService;
 public class EmailServiceImpl implements EmailService {
 
     @Autowired
-    private JavaMailSender mailSender;  // Inject JavaMailSender to send emails
+    private JavaMailSender mailSender;
 
     @Override
     public void sendConfirmationEmail(String email, String token) {
         SimpleMailMessage message = new SimpleMailMessage();
-        message.setFrom("your-email@domain.com");  // Sender email (should be valid)
-        message.setTo(email);  // Recipient email
+        message.setFrom("your-email@domain.com");
+        message.setTo(email);
 
-        message.setSubject("Email Confirmation - Please verify your email");
+        message.setSubject("Email Confirmation - Your OTP Code");
 
-        // Construct the email confirmation URL
-        String confirmationUrl = "http://localhost:2100/api/auth/confirm?email=" + email + "&token=" + token;
 
-        // Email body message
-        String emailBody = String.format("Dear User,\n\nPlease confirm your email by clicking the link below:\n%s\n\nThanks,\nYour Team", confirmationUrl);
+        String emailBody = String.format("Dear User,\n\nYour OTP for email verification is: %s\n\nPlease enter this code in the app to verify your email.\n\nThanks,\nYour Team", token);
 
         message.setText(emailBody);
 
-        // Send the email
+        mailSender.send(message);
+    }
+    @Override
+    public void sendOtpEmail(String email, String otp) {
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setTo(email);
+        message.setSubject("Password Reset OTP");
+        message.setText("Your OTP code is: " + otp);
         mailSender.send(message);
     }
 }
